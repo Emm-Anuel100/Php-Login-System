@@ -18,7 +18,7 @@
         $result = mysqli_query($conn, $query);
         if(mysqli_num_rows($result) > 0){
           while ($row = mysqli_fetch_assoc($result)) {
-              //*****  Verifies if password matches already hashed password  *****//
+              //*****  Verifies if password matches already hashed password in database *****//
             if (password_verify($password, $row['password'])) {
                 $_SESSION['id'] = $row['id'];
                 //*****  redirect to index page  *****//
