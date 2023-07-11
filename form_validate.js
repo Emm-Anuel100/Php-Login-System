@@ -1,6 +1,4 @@
-
 function  validate(){
-
    //******* Refrences ******//
    let password_value1 = document.querySelector('#password1').value;
    let password_value2 = document.querySelector('#password2').value;
