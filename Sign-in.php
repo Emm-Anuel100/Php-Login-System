@@ -1,27 +1,20 @@
-
 <?php
   session_start();
 
-  if (isset($_SESSION['id'])) {
-      header("Location: index.php");
-  }
-
-  //*****  include connection file  *****//
-  include_once('conn.php');
+  //  connection file
+  require_once('./conn.php');
   
   if (isset($_POST['email'])) {
 
-      $email    = mysqli_real_escape_string($conn, $_POST['email']);
+      $email  = mysqli_real_escape_string($conn, $_POST['email']);
       $password = mysqli_real_escape_string($conn, $_POST['password']); 
       
-        $query  = "SELECT * FROM users WHERE email = '$email'";
+        $query  = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
         $result = mysqli_query($conn, $query);
         if(mysqli_num_rows($result) > 0){
           while ($row = mysqli_fetch_assoc($result)) {
-              //*****  Verifies if password matches already hashed password in database *****//
             if (password_verify($password, $row['password'])) {
                 $_SESSION['id'] = $row['id'];
-                //*****  redirect to index page  *****//
                 header("Location: index.php");
             }else{
                 ?>
@@ -42,69 +35,62 @@
 ?>
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <meta name="description" content="Kryptip investment site">
-   <meta name="author" content="Crypto invest">
-   <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOO | sign in</title>
+    <meta name="keywords" content="Goo,Travel,Journey,Book ride">
+    <meta name="description" content="web-app where users can book rides ">
+    <meta name="author" content="Goo Travels">
 
-   <title>KRYPTIP | sign in</title>
+    <!-- Google Fonts Pre Connect -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
-    <!-- Bootstrap core CSS -->
-   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="./styles/sign-in.css">
 
-    <!-- Additional CSS Files -->
-   <link rel="stylesheet" href="assets/css/sign-in.css">
+    <!-- Link favIcon  -->
+    <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
+
 </head>
 
 <body>
    
-    <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <a href="index.php" class="logo">
-                          KRYPTIP
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- ***** Header Area End ***** -->
+<header class="header">
+      <a href="#" class="logo"><img src="./images/logo.png" alt="logo"></a>
+</header>
   
-    <!-- ***** Main Banner Area Start ***** -->
-    <section class="section main-banner" id="top" data-section="section1">
-       
-       <img src="./assets/images/Background.png" alt="" id="bg_img">
-   </section>
-    <!-- ***** Main Banner Area End ***** -->
- 
-    
+  <section class="section-page"> 
     <div class="form-section">
-      <form action="Sign-in.php" method="POST" id="sign-in">
-        <h2>Login And Start Earning</h2><br>
+      <h2>Login And Start Booking</h2><br>
+      <form action="./Sign-in.php" method="POST" id="sign-in" onsubmit='return validate()'>
          <fieldset>
             <input type="email" name="email" id="email" required="" placeholder="Email">
          </fieldset>
          <fieldset>
-            <input type="password" name="password" id="password" required="" placeholder="Password">
-         </fieldset>
-         <span>don't have an account? <a href="Sign-up.php">sign up</a></span>
+            <input type="password" name="password" id="password1" required="" placeholder="Password">
+            <h5 class="show1">SHOW</h5>
+          </fieldset>
+         <span class="sign-in">Don't have an account? <a href="Index.php">Sign up</a></span>
+         <br/><br/>
+         <a href="Forot.php" class="forgot">Forgot password?</a>
          <fieldset>
-            <button type="submit" name="login">Login</button>
+            <button type="submit">sign in</button>
          </fieldset>
       </form>
+    </div> <br>
+   </section> 
+  
+   <script src="./scripts/password.js"></script>
+   <script src="./scripts/scroll.js"></script>
 
-    </div>
 </body>
 </html>
